@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/iva/Документи/who_is_there/app/src/main/libs/gson-2.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="/home/iva/Документи/who_is_there/app/build/intermediates/pre-dexed/debug/gson-2.3.1-b7aa5be017eb1a5baab90e60471e0818de965477.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/who_is_there/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/libs/internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="/home/iva/Документи/who_is_there/app/build/intermediates/pre-dexed/debug/internal_impl-22.0.0-35b38ede05eb2896d8274e22e471fa2cc447e140.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/who_is_there/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f7188fc9a524a8f965b5aeab74879036f0431080">
+        <dex dex="/home/iva/Документи/who_is_there/app/build/intermediates/pre-dexed/debug/classes-d86a9b209769a5a74ea8d0b1c4ab3da168cdf599.jar" />
+    </item>
+    <item
+        jar="/root/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="/home/iva/Документи/who_is_there/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-78c0dd6d094fe25cf465ec3f63476789c87bb054.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/who_is_there/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="/home/iva/Документи/who_is_there/app/build/intermediates/pre-dexed/debug/classes-931742eb5e668ccda080af4e32b51ec4a202b5ea.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/who_is_there/app/src/main/libs/java-json.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="edad9c5de6fb8df07c535a47045956026011ffa3">
+        <dex dex="/home/iva/Документи/who_is_there/app/build/intermediates/pre-dexed/debug/java-json-1d3e4692033c0ef3f13078d380b5d0b25077b17c.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/who_is_there/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="/home/iva/Документи/who_is_there/app/build/intermediates/pre-dexed/debug/classes-a29d384561cf4f428666ea157a1ae4e9b7a14aa3.jar" />
+    </item>
+    <item
+        jar="/root/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.0.0/support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="/home/iva/Документи/who_is_there/app/build/intermediates/pre-dexed/debug/support-annotations-22.0.0-5c3eb70b57859c75c7a27e70cee70709b060b059.jar" />
+    </item>
+
+</items>
