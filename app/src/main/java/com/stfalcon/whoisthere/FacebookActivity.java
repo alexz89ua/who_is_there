@@ -2,6 +2,7 @@ package com.stfalcon.whoisthere;
 
 import android.content.Intent;
 
+import android.graphics.Bitmap;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
@@ -25,13 +26,24 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONObject;
 import org.json.JSONException;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
@@ -90,11 +102,11 @@ public class FacebookActivity extends ActionBarActivity {
     {
         if(AccessToken.getCurrentAccessToken()!=null)
         {
-            TextView_Name.setText(Profile.getCurrentProfile().getName());
-            TextView_Id.setText(Profile.getCurrentProfile().getId());
-            profilePictureView = (ProfilePictureView) findViewById(R.id.friendProfilePicture);
-            profilePictureView.setProfileId(Profile.getCurrentProfile().getId());
-            TextView_Link.setText(Profile.getCurrentProfile().getLinkUri().toString());
+            User user = new User(Profile.getCurrentProfile().getName(), Profile.getCurrentProfile().getId(),Profile.getCurrentProfile().getLinkUri().toString());
+            TextView_Name.setText(user.name);
+            TextView_Id.setText(user.id);
+            TextView_Link.setText(user.link);
+            ProfileFoto(user.Get_Pass_To_Profile_Foto());
         } else
         {
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -117,19 +129,12 @@ public class FacebookActivity extends ActionBarActivity {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 try {
-
-                        User user =  new Gson().fromJson(object.toString(), User.class);
-
-
-                                        TextView_Name.setText(user.name);
-                                        TextView_Id.setText(user.id);
-
-                                        profilePictureView = (ProfilePictureView) findViewById(R.id.friendProfilePicture);
-                                        profilePictureView.setProfileId(user.id);
-
-                                        //String url = "http://graph.facebook.com/839669416127599/picture";
-
-                                        TextView_Link.setText(user.link);
+                            User user =  new Gson().fromJson(object.toString(), User.class);
+                                TextView_Name.setText(user.name);
+                                TextView_Id.setText(user.id);
+                                ProfileFoto(user.Get_Pass_To_Profile_Foto());
+                                TextView_Link.setText(user.link);
+                                   //String url = "http://graph.facebook.com/839669416127599/picture";
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -158,6 +163,20 @@ public class FacebookActivity extends ActionBarActivity {
                 Log.v("LoginActivity", exception.getCause().toString());
             }
         });
+    }
+
+    public void ProfileFoto(String pass)
+    {
+        ImageView im = (ImageView) findViewById(R.id.imageView);
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(FacebookActivity.this)
+                .memoryCacheExtraOptions(100, 100) // width, height
+                .discCacheExtraOptions(100, 100, Bitmap.CompressFormat.PNG, 100)
+                .build();
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+        imageLoader.displayImage(pass, im);
     }
 
 }

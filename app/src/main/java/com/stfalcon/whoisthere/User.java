@@ -20,5 +20,10 @@ public class User {
         this.name=name;
     }
 
+    public String Get_Pass_To_Profile_Foto()
+    {
+        return "http://graph.facebook.com/"+this.id+"/picture?type=large";
+    }
+
 
 }
