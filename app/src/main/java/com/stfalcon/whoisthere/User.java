@@ -1,12 +1,17 @@
 package com.stfalcon.whoisthere;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by root on 22.04.15.
  */
 public class User {
-    private String name;
-    private String id;
-    private String link;
+    @SerializedName("name")
+    public String name;
+    @SerializedName("id")
+    public String id;
+    @SerializedName("link")
+    public String link;
 
     public User(String name, String id, String link)
     {
@@ -14,22 +19,6 @@ public class User {
         this.link=link;
         this.name=name;
     }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public String getLink()
-    {
-        return link;
-    }
-
 
 
 }
