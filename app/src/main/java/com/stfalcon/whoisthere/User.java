@@ -1,12 +1,17 @@
 package com.stfalcon.whoisthere;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by root on 22.04.15.
  */
 public class User {
-    private String name;
-    private String id;
-    private String link;
+    @SerializedName("name")
+    public String name;
+    @SerializedName("id")
+    public String id;
+    @SerializedName("link")
+    public String link;
 
     public User(String name, String id, String link)
     {
@@ -15,21 +20,10 @@ public class User {
         this.name=name;
     }
 
-    public String getName()
+    public String Get_Pass_To_Profile_Foto()
     {
-        return name;
+        return "http://graph.facebook.com/"+this.id+"/picture?type=large";
     }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    public String getLink()
-    {
-        return link;
-    }
-
 
 
 }

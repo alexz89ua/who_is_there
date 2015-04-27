@@ -39,11 +39,13 @@
         android:id="@+id/textViewId"
         android:layout_centerHorizontal="true" />
 
-    <com.facebook.login.widget.ProfilePictureView
-        android:id="@+id/friendProfilePicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
         android:gravity="center_horizontal"
-        android:padding="5sp" />
+        android:padding="5sp"
+        android:scaleType="centerCrop"/>
+
 
 </LinearLayout>
