@@ -1,7 +1,10 @@
 package com.stfalcon.whoisthere;
 
 import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -11,46 +14,54 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.AbsoluteLayout;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import android.view.ViewGroup.LayoutParams;
 
 
 public class MapActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks{
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, LocationListener, GoogleMap.OnMarkerClickListener {
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    SupportMapFragment mapFragment;
-    GoogleMap myMap;
 
     private LocationManager locationManager;
+
+    SupportMapFragment mapFragment;
+    private Marker myMarker;
+    GoogleMap myMap;
+
+    int zoom=4000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_activity2);
+        setContentView(R.layout.activity_map);
 
         MyLocationListener.SetUpLocationListener(this);
 
-        SetUpMap();
+        InitMap();
+        InitPrimeUser();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -62,35 +73,88 @@ public class MapActivity extends ActionBarActivity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
-    private void SetUpMap(){
+
+    private void InitMap(){
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         myMap = mapFragment.getMap();
-        myMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        myMap.setOnMarkerClickListener((GoogleMap.OnMarkerClickListener) this);
         if (myMap == null) {
             finish();
-            return;
         }
+    }
 
+    private PopupWindow pwindo;
+
+    private void InitPrimeUser(){
         myMap.setMyLocationEnabled(true);
-
+        myMap.clear();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location myLoc = MyLocationListener.imHere;
-        if (myLoc != null) {
-           double x=myLoc.getLongitude();
-           double y=myLoc.getLatitude();
+
+            double longitude=myLoc.getLongitude();
+            double latitude=myLoc.getLatitude();
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Вас знайдено!",
                     Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
-            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(y, x), 15.5f), 4000, null);
-            myMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(y, x))
-                    .title("My position")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));}
+            myMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15.5f), zoom, null);
+            myMarker = myMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(latitude, longitude))
+                    .title("Your position")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
     }
+
+    public void showInfoWindow(){
+        LayoutInflater inflater = (LayoutInflater) MapActivity.this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.info_window,
+                    (ViewGroup) findViewById(R.id.popup));
+            pwindo = new PopupWindow(layout, 460, 475, true);
+            pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+        pwindo.setFocusable(true);
+
+        pwindo.setBackgroundDrawable(new ColorDrawable());
+
+        pwindo.setOutsideTouchable(true);
+
+
+        pwindo.setTouchInterceptor(new View.OnTouchListener() {
+
+               public boolean onTouch(View v, MotionEvent event)
+
+               {
+
+                   if(event.getAction() == MotionEvent.ACTION_OUTSIDE)
+
+                   {
+
+                       pwindo.dismiss();
+
+                       return true;
+
+                   }
+
+                   return false;
+
+               }
+
+           });
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        if (marker.equals(myMarker)){
+
+        showInfoWindow();
+
+        }
+        return true;
+    }
+
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
@@ -122,33 +186,24 @@ public class MapActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.map_activity2, menu);
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
+    public void onLocationChanged(Location loc) {
+        /*InitPrimeUser();*/
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onStatusChanged(String s, int i, Bundle bundle) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+    }
 
-        return super.onOptionsItemSelected(item);
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 
     /**
@@ -179,7 +234,7 @@ public class MapActivity extends ActionBarActivity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_map_activity2, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_map_activity, container, false);
             return rootView;
         }
 
