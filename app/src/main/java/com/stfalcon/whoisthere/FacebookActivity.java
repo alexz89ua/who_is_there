@@ -146,6 +146,11 @@ public class FacebookActivity extends ActionBarActivity {
                 parameters.putString("fields", "id,name,email,gender, birthday,link");
                 request.setParameters(parameters);
                 request.executeAsync();
+                Intent intent = new Intent(FacebookActivity.this, MapActivity.class);
+                intent.putExtra("name", TextView_Name.getText().toString());
+                intent.putExtra("id", TextView_Id.getText().toString());
+                intent.putExtra("pass","http://graph.facebook.com/"+TextView_Id.getText().toString()+"/picture?type=large" );
+                startActivity(intent);
             }
 
             @Override
