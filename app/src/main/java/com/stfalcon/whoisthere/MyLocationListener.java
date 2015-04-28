@@ -1,4 +1,5 @@
 package com.stfalcon.whoisthere;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -9,8 +10,7 @@ class MyLocationListener implements LocationListener {
 
     static Location imHere;
 
-    public static void SetUpLocationListener(Context context)
-    {
+    public static void SetUpLocationListener(Context context) {
         LocationManager locationManager = (LocationManager)
                 context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -18,21 +18,35 @@ class MyLocationListener implements LocationListener {
 
         locationManager.requestLocationUpdates(
                 LocationManager.NETWORK_PROVIDER,
-                1000,
+                30000,
                 1,
                 locationListener);
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                30000,
+                1,
+                locationListener);
+        imHere = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (imHere == null) {
+            imHere = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
 
-        imHere = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
     }
 
     @Override
     public void onLocationChanged(Location loc) {
         imHere = loc;
     }
+
     @Override
-    public void onProviderDisabled(String provider) {}
+    public void onProviderDisabled(String provider) {
+    }
+
     @Override
-    public void onProviderEnabled(String provider) {}
+    public void onProviderEnabled(String provider) {
+    }
+
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {}
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
 }
