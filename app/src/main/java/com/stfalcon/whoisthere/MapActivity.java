@@ -1,6 +1,7 @@
 package com.stfalcon.whoisthere;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -24,6 +25,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.AbsoluteLayout;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -53,6 +55,7 @@ public class MapActivity extends ActionBarActivity
     String NAME;
     String ID;
     String PASS;
+    String parserLink;
 
     private Toolbar toolbar;
 
@@ -60,6 +63,7 @@ public class MapActivity extends ActionBarActivity
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     DrawerLayout Drawer;
+    private SharedPreferences mSettings;
 
     ActionBarDrawerToggle mDrawerToggle;
 
@@ -82,17 +86,22 @@ public class MapActivity extends ActionBarActivity
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         NAME = getIntent().getExtras().getString("name");
-        Toast toast = Toast.makeText(getApplicationContext(),
-                NAME, Toast.LENGTH_SHORT);
-        toast.show();
+
         ID = getIntent().getExtras().getString("id");
         PASS = getIntent().getExtras().getString("pass");
+
+        /*mSettings = getSharedPreferences("ka", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putString("int", "hell yeee");
+        editor.commit();*/
 
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
 
-        mAdapter = new MyAdapter(TITLES,ICONS,NAME,ID);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+        ImageView im = (ImageView) findViewById(R.id.imageView);
+
+        mAdapter = new MyAdapter(TITLES,ICONS,NAME,ID,im,this);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
         // And passing the titles,icons,header view name, header view email,
         // and header view profile picture
 
@@ -310,6 +319,11 @@ public class MapActivity extends ActionBarActivity
             ((MapActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+    }
+
+    public void CloseApp()
+    {
+        this.finish();
     }
 
 }
