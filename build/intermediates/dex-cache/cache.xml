@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.1/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f7188fc9a524a8f965b5aeab74879036f0431080">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-d6eddf8ece7c6b29fcf8a4752a2228fe4b869f65.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0e8228b4bc69c6a2c8d7c18498a77e53417d2574">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-cdd73cdf52f4a4170de83d695c9c9c705a3327f3.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1c5a76debf0c2857ccad422c4a80ed785982f8df">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-14df200cbca397003943188146b808efa25b7245.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4cd0b093824b3228fffc21ea369b98d0b1db6566">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-667c4f3157f0467adafe2619b7c10611dbb2f463.jar" />
+    </item>
+    <item
+        jar="/root/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-3d55f01eb05961076fb5552dc6085f13f92950ab.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="73ccb92b70112f2e463e415ef8d7275de7da6516">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-c57270b3c20277025a7700ff90022c12379e64c8.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/src/main/libs/universal-image-loader-1.8.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d2efc8f6c4ed6beb71d27595b19239c2b29b3dfb">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/universal-image-loader-1.8.3-d510e65cb784c8bc7914d163f57abbc12ac3362c.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fb04b12526b0073c7fb1ebb70c5842d82ee95596">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-f9f7cad990f656fda2c9d33fd34a71058a3a47cb.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9224bc4c54ba95147c7eabd874573763c07cb6be">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-019980c647b8f65ea2db962aff380b781ec4b233.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7ff613bf78ab057293892fdbd4169eda899c89b9">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-6e83c2cd3f49dbbca1f7eb39c6aa41389890a40c.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="41b3870cbe5fa546d8095b5b89d42cb69f3dd175">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-fa1806936d9529a29ecd1908a02c12eed58b7633.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-cceefc2c8eb252ab6f5b32c2b1547bee0b39428e.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3033cc3a2c68dff3e5b646d6d084bdbdf7d00b25">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-5d673f7f7e65f32e709ec5a8dd70043e6ae4f356.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a96b762bde4139de855735f175ec4d17dca55a6d">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-8038dab8426ec9640eb68fe1e9a7a33ce148f52d.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4c93d99d454c975536bbe3b42283eee847f03ea3">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-02650dc178bb660ee66655cd3a0964cea0c8bb81.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e3d791b42eaa90416cd0b2d2e608092794a3baa4">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-48cc79c27e2e30e0f63698e11e7ea5444331f2f1.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/src/main/libs/gson-2.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/gson-2.3.1-44d41318c1d68b439673febf60ba277e1bebeb26.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a08d65794b844d8e7540bf9a33859bf3b2482d7f">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-8ab8bb6da70d0a061e6c5f840855730f80b98c03.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3c0b099f9de16b265ecd6122fcb603e7d0d29f90">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-6d7e12727a0e1e3da2d84d02ef65fa295c913094.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/src/main/libs/java-json.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="edad9c5de6fb8df07c535a47045956026011ffa3">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/java-json-e25fe9e329ce97ebc32cc506d85ac45aab24fbdf.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="29fd6d3794b71491c2789708cd8d03c71feb8954">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-c589582ec9546ac343d3692569b4977abc42142b.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/de.hdodenhof/circleimageview/1.2.2/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="803c4c913beac8f7980d680c725a40835d1d7c77">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-ebecf79da394d2cf91c1c6fe796d0129bcf79730.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="17f8750d5c0749e44dd7c54aa390d9c937803825">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-5719b68cb8216e98b9ce6e16fbf9724cb55fe881.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ef5f051e7308febe289dc93c67c5f32785b4260a">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-da90bfcb459d375a6462d7a0da94049e9b29c537.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="055783146ba9654a725442563be78cad303aad1f">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-2c627c69d92091b68f0e488170b559cfc75a395a.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c976518693e89ad44fbfccfc654941eaec198d08">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-e3003a868100e76a753ed689ef90a90cf514aa16.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-84d928fee4598c5124a126d67b975cbbbb51ec21.jar" />
+    </item>
+    <item
+        jar="/root/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-78c0dd6d094fe25cf465ec3f63476789c87bb054.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.0.0/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-11ec742d06d108ba31e407b7325fd087ab3e9a57.jar" />
+    </item>
+    <item
+        jar="/home/iva/Документи/kov/who_is_there/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/22.1.1/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e0b0c35d02308b270015a74cada4887e2e49b889">
+        <dex dex="/home/iva/Документи/kov/who_is_there/app/build/intermediates/pre-dexed/debug/classes-631b160055d9e0e9c5fa10731d98dfc750e301f4.jar" />
+    </item>
+
+</items>
