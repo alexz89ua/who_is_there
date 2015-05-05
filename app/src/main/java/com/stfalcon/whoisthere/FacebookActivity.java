@@ -1,14 +1,11 @@
 package com.stfalcon.whoisthere;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,27 +16,38 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ProfilePictureView;
 import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.octo.android.robospice.persistence.exception.SpiceException;
+import com.octo.android.robospice.request.listener.RequestListener;
+import com.octo.android.robospice.request.simple.SimpleTextRequest;
 
 import org.json.JSONObject;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
 
-public class FacebookActivity extends ActionBarActivity {
+
+public class FacebookActivity extends BaseSpiceActivity {
 
     LoginButton loginButton;
     TextView TextView_Name, TextView_Id, TextView_Link;
-    ProfilePictureView profilePictureView;
-    public static final String APP_PREFERENCES = "mysettings";
-    public static final String APP_PREFERENCES_NAME = "pass"; // имя кота
 
     private SharedPreferences mSettings;
     CallbackManager callbackManager;
+
+    static User user;
+    HashMap<String, String> data;
+
+    private SimpleTextRequest txtRequest, loadUserInformation;
+    private SendUserDaraRequest sendUserDaraRequest;
+    String url;
+    URL u;
+    public static Activity fa;
+
+    TextRequestListener textRequestListener;
 
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
@@ -53,17 +61,45 @@ public class FacebookActivity extends ActionBarActivity {
 
         InitializationFacebook(savedInstanceState);
 
-
         InitializationView();
 
         CheckUserLogin();
 
+      //  textRequestListener = new TextRequestListener();
+
         LoginButtonCLick();
 
+      //  sendUserDaraRequest = new SendUserDaraRequest(u);
        /* List<String> permissionNeeds = Arrays.asList("user_photos", "email", "user_birthday", "user_location", "public_profile");
 
         loginButton.setReadPermissions(permissionNeeds);*/
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        /*getSpiceManager().execute(txtRequest, "txt", DurationInMillis.ONE_MINUTE,
+                new TextRequestListener());*/
+
+        //getSpiceManager().execute(sendUserDaraRequest, textRequestListener);
+    }
+
+    public final class TextRequestListener implements RequestListener<String> {
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Toast.makeText(FacebookActivity.this, "failure", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onRequestSuccess(final String result) {
+
+            Toast.makeText(FacebookActivity.this, "success", Toast.LENGTH_SHORT).show();
+
+
+        }
     }
 
 
@@ -73,6 +109,8 @@ public class FacebookActivity extends ActionBarActivity {
         callbackManager = CallbackManager.Factory.create();
 
         setContentView(R.layout.activity_facebook);
+
+        fa = this;
     }
 
     public void InitializationView() {
@@ -84,28 +122,44 @@ public class FacebookActivity extends ActionBarActivity {
 
     public void CheckUserLogin() {
         if (AccessToken.getCurrentAccessToken() != null) {
-            User user = new User(Profile.getCurrentProfile().getName(), Profile.getCurrentProfile().getId(), Profile.getCurrentProfile().getLinkUri().toString());
-            /*TextView_Name.setText(user.name);
-            TextView_Id.setText(user.id);
-            TextView_Link.setText(user.link);
-            ProfileFoto(user.Get_Pass_To_Profile_Foto());*/
-            /*mSettings = this.getSharedPreferences("ka", Context.MODE_PRIVATE);
 
+
+           /* Toast toast = Toast.makeText(getApplicationContext(),
+                    AccessToken.getCurrentAccessToken().toString(), Toast.LENGTH_SHORT);
+            toast.show();*/
+
+            mSettings = this.getSharedPreferences("ka", Context.MODE_PRIVATE);
+
+            String s = mSettings.getString("parser", "nooooo");
+
+            user = new Gson().fromJson(s, User.class);
+            user.name = user.name.replace(" ", "_");
+            /*
+            mSettings = this.getSharedPreferences("ka", Context.MODE_PRIVATE);
             String s = mSettings.getString("parser", "nooooo");*/
 
-            Intent intent = new Intent(FacebookActivity.this, MapActivity.class);
-            intent.putExtra("name", user.name);
-            intent.putExtra("id", user.id);
-            intent.putExtra("parser", user.id);
-            intent.putExtra("pass", "http://graph.facebook.com/" + user.id + "/picture?type=large");
-            startActivity(intent);
-            this.finish();
+
+            url = "https://who-is-there.herokuapp.com/hello/" + user.id + "/" + user.name + "/228/48";
+            Log.v("URL", url);
+            try {
+                u = new URL(url);
+                sendUserDaraRequest = new SendUserDaraRequest(u);
+                getSpiceManager().execute(sendUserDaraRequest, textRequestListener);
+                Intent intent = new Intent(FacebookActivity.this, MapActivity.class);
+                startActivity(intent);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            /*TextView_Id.setText(user.id);
+            TextView_Link.setText(user.link);*/
+
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "You must Login", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
+
 
     public void LoginButtonCLick() {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -119,7 +173,10 @@ public class FacebookActivity extends ActionBarActivity {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 try {
-                                    User user = new Gson().fromJson(object.toString(), User.class);
+
+                                    user = new Gson().fromJson(object.toString(), User.class);
+                                    user.name = user.name.replace(" ", "_");
+
                                    /* TextView_Name.setText(user.name);
                                     TextView_Id.setText(user.id);
                                     ProfileFoto(user.Get_Pass_To_Profile_Foto());
@@ -133,20 +190,32 @@ public class FacebookActivity extends ActionBarActivity {
                                     //SharedPref(response.getConnection().getURL().toString());
 
 
-
                                     mSettings = getSharedPreferences("ka", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = mSettings.edit();
                                     editor.putString("parser", object.toString());
                                     editor.commit();
 
-                                    Intent intent = new Intent(FacebookActivity.this, MapActivity.class);
+
+                                   /* Intent intent = new Intent(FacebookActivity.this, MapActivity.class);
                                     intent.putExtra("name", user.name);
                                     intent.putExtra("id", user.id);
                                     intent.putExtra("pass", "http://graph.facebook.com/" + user.id + "/picture?type=large");
-                                    intent.putExtra("parseLink", response.getConnection().getURL().toString());
-                                    startActivity(intent);
-                                    finish();
+                                    intent.putExtra("parseLink", response.getConnection().getURL().toString());*/
+                                    //startActivity(intent);
+                                    //finish();
 
+                                    url = "https://who-is-there.herokuapp.com/hello/" + user.id + "/"+user.name+"/228/48";
+
+                                    TextView_Id.setText(user.id);
+                                    TextView_Link.setText(url);
+
+                                    try {
+                                        u = new URL(url);
+                                        sendUserDaraRequest = new SendUserDaraRequest(u);
+                                        getSpiceManager().execute(sendUserDaraRequest, textRequestListener);
+                                    } catch (MalformedURLException e) {
+                                        e.printStackTrace();
+                                    }
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -179,25 +248,6 @@ public class FacebookActivity extends ActionBarActivity {
         });
     }
 
-    public void ProfileFoto(String pass) {
-        ImageView im = (ImageView) findViewById(R.id.imageView);
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(FacebookActivity.this)
-                .memoryCacheExtraOptions(100, 100) // width, height
-                .discCacheExtraOptions(100, 100, Bitmap.CompressFormat.PNG, 100)
-                .build();
-
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.init(config);
-        imageLoader.displayImage(pass, im);
-    }
-
-    public void SharedPref(String pass) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("pass", pass);
-        editor.putInt("int", 228);
-        editor.apply();
-    }
 
 }
