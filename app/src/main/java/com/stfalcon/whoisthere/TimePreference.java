@@ -30,8 +30,8 @@ public class TimePreference extends DialogPreference {
         super(ctxt, attrs, defStyle);
 
         is24HourFormat = DateFormat.is24HourFormat(ctxt);
-        setPositiveButtonText("Отмена");
-        setNegativeButtonText("ОК");
+        setPositiveButtonText("ОК");
+        setNegativeButtonText("Отмена");
     }
 
     @Override

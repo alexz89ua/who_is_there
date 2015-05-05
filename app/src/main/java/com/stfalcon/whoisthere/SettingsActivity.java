@@ -201,7 +201,7 @@ public class SettingsActivity extends PreferenceActivity {
     public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private SeekBarPreference _seekBarPref;
-
+        private TimePreference _timePreference;
         @Override
         public void onCreate(Bundle savedInstanceState) {
 
@@ -215,13 +215,15 @@ public class SettingsActivity extends PreferenceActivity {
 
             // Get widgets :
             _seekBarPref = (SeekBarPreference) this.findPreference("SEEKBAR_VALUE");
-
+            _timePreference = (TimePreference) this.findPreference("time");
             // Set listener :
 
             getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 
             // Set seekbar summary :
             int radius = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getInt("SEEKBAR_VALUE", 50);
+            /*String lasttime = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("time", "");
+            _timePreference.setSummary(this.getString(R.string.pref_start_inkognito_time).replace("$1", "" + lasttime));*/
             _seekBarPref.setSummary(this.getString(R.string.settings_summary).replace("$1", "" + radius));
         }
 
