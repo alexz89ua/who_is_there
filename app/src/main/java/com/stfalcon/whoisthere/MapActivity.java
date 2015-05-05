@@ -2,7 +2,7 @@ package com.stfalcon.whoisthere;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -32,17 +34,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+
 public class MapActivity extends ActionBarActivity
         implements LocationListener, GoogleMap.OnMarkerClickListener {
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
+
     String TITLES[] = {"Profile", "Settings", "Exit"};
     int ICONS[] = {R.drawable.profile, R.drawable.settings, R.drawable.exit};
+
 
     String NAME;
     String ID;
     String PASS;
+
+    String parserLink;
 
     private Toolbar toolbar;
 
@@ -50,6 +57,9 @@ public class MapActivity extends ActionBarActivity
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     DrawerLayout Drawer;
+
+    private SharedPreferences mSettings;
+
 
     ActionBarDrawerToggle mDrawerToggle;
 
@@ -63,6 +73,9 @@ public class MapActivity extends ActionBarActivity
     private PopupWindow pwindo;
     GoogleMap myMap;
 
+    Button ProfileBtn;
+    Button ChatBtn;
+    Button AddBtn;
     int zoom = 4000;
 
     @Override
@@ -79,11 +92,24 @@ public class MapActivity extends ActionBarActivity
         ID = getIntent().getExtras().getString("id");
         PASS = getIntent().getExtras().getString("pass");
 
+        ID = getIntent().getExtras().getString("id");
+        PASS = getIntent().getExtras().getString("pass");
+
+        /*mSettings = getSharedPreferences("ka", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mSettings.edit();
+        editor.putString("int", "hell yeee");
+        editor.commit();*/
+
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
 
         mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
 
-        mAdapter = new MyAdapter(TITLES, ICONS, NAME, ID);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+        // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+
+        ImageView im = (ImageView) findViewById(R.id.imageView);
+
+        mAdapter = new MyAdapter(TITLES, ICONS, NAME, ID, im, this);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+
         // And passing the titles,icons,header view name, header view email,
         // and header view profile picture
 
@@ -95,7 +121,9 @@ public class MapActivity extends ActionBarActivity
 
 
         Drawer = (DrawerLayout) findViewById(R.id.DrawerLayout);        // Drawer object Assigned to the view
+
         mDrawerToggle = new ActionBarDrawerToggle(this, Drawer, toolbar, R.string.drawer_open, R.string.drawer_close) {
+
 
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -109,7 +137,6 @@ public class MapActivity extends ActionBarActivity
                 super.onDrawerClosed(drawerView);
                 // Code here will execute once drawer is closed
             }
-
 
         }; // Drawer Toggle Object Made
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
@@ -156,7 +183,7 @@ public class MapActivity extends ActionBarActivity
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "Ваше місцеположення не знайдено!",
+                    "Ваше місцезнаходження не знайдено!",
                     Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
@@ -174,64 +201,44 @@ public class MapActivity extends ActionBarActivity
         pwindo.setBackgroundDrawable(new ColorDrawable());
         pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
 
-        /*Button ProfileBtn = (Button) layout.findViewById(R.id.ProfileBtn);
-        Button ChatBtn = (Button) layout.findViewById(R.id.ChatBtn);
-        Button AddBtn = (Button) layout.findViewById(R.id.AddBtn);
+        ProfileBtn = (Button) layout.findViewById(R.id.ProfileBtn);
+        ChatBtn = (Button) layout.findViewById(R.id.ChatBtn);
+        AddBtn = (Button) layout.findViewById(R.id.AddBtn);
 
-        ProfileBtn.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener oclBtn = new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "ProfileBtn_Pressed",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
+                switch (v.getId()) {
+                    case R.id.ProfileBtn:
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                "ProfileBtn_Pressed",
+                                Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        break;
+                    case R.id.ChatBtn:
+                        toast = Toast.makeText(getApplicationContext(),
+                                "ChatBtn_Pressed",
+                                Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        break;
+                    case R.id.AddBtn:
+                        toast = Toast.makeText(getApplicationContext(),
+                                "AddBtn_Pressed",
+                                Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        break;
+                }
+
             }
-        });
-        ChatBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "ChatBtn_Pressed",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-        });
-        AddBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "AddBtn_Pressed",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-        });*/
-
+        };
+        ProfileBtn.setOnClickListener(oclBtn);
+        ChatBtn.setOnClickListener(oclBtn);
+        AddBtn.setOnClickListener(oclBtn);
     }
 
-
-    public void ProfileBtnClick(View layout) {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "ProfileBtn_Pressed",
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
-
-    public void ChatBtnClick(View layout) {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "ChatBtn_Pressed",
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
-
-    public void AddBtnClick(View layout) {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "AddBtn_Pressed",
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-    }
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
@@ -338,6 +345,10 @@ public class MapActivity extends ActionBarActivity
             ((MapActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+    }
+
+    public void CloseApp() {
+        this.finish();
     }
 
 }

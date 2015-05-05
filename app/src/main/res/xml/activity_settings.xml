@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <com.stfalcon.whoisthere.SeekBarPreference
+        android:defaultValue="50"
+        android:key="SEEKBAR_VALUE"
+        android:max="1000"
+        android:summary="@string/settings_summary"
+        android:text="@string/settings_unit"
+        android:title="@string/settings_title" />
+
+</PreferenceScreen>
