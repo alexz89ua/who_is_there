@@ -18,11 +18,13 @@ public class User {
     public String gender;
     @SerializedName("birthday")
     public String birthday;
+    public double x;
+    public double y;
     public User(String name, String id, String link, String email, String gender, String birthday)
     {
         this.id=id;
         this.link=link;
-        this.name=name;
+        this.name=name.replace(" ","");
         this.gender = gender;
         try {
             this.email = email;
@@ -34,5 +36,6 @@ public class User {
     {
         return "http://graph.facebook.com/"+this.id+"/picture?type=large";
     }
+
 
 }
