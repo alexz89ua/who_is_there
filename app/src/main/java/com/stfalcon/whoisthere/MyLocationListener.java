@@ -7,7 +7,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 class MyLocationListener implements LocationListener {
-
+    static String provider;
     static Location imHere;
 
     public static void SetUpLocationListener(Context context) {
@@ -15,15 +15,15 @@ class MyLocationListener implements LocationListener {
                 context.getSystemService(Context.LOCATION_SERVICE);
 
         LocationListener locationListener = new MyLocationListener();
-
+        if (provider=="qwe")
         locationManager.requestLocationUpdates(
                 LocationManager.NETWORK_PROVIDER,
-                30000,
+                3000,
                 1,
                 locationListener);
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
-                30000,
+                3000,
                 1,
                 locationListener);
         imHere = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);

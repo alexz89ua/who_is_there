@@ -201,7 +201,9 @@ public class SettingsActivity extends PreferenceActivity {
     public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         private SeekBarPreference _seekBarPref;
-        private TimePreference _timePreference;
+        private TimePreference _startTimePref;
+        private TimePreference _stopTimePref;
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
 
@@ -215,23 +217,29 @@ public class SettingsActivity extends PreferenceActivity {
 
             // Get widgets :
             _seekBarPref = (SeekBarPreference) this.findPreference("SEEKBAR_VALUE");
-            _timePreference = (TimePreference) this.findPreference("time");
+            _startTimePref = (TimePreference) this.findPreference("preferences_start_time");
+            _stopTimePref = (TimePreference) this.findPreference("preferences_stop_time");
             // Set listener :
 
             getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-
+            MyLocationListener myLocList = new MyLocationListener();
+            myLocList.provider = "qwe";
             // Set seekbar summary :
             int radius = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getInt("SEEKBAR_VALUE", 50);
-            /*String lasttime = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("time", "");
-            _timePreference.setSummary(this.getString(R.string.pref_start_inkognito_time).replace("$1", "" + lasttime));*/
+            String startTime = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("preferences_start_time", "");
+            String stopTime = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("preferences_stop_time", "");
+            _startTimePref.setSummary(this.getString(R.string.pref_start_inkognito_time).replace("$1", "" + startTime));
+            _stopTimePref.setSummary(this.getString(R.string.pref_end_inkognito_time).replace("$1", "" + stopTime));
+
             _seekBarPref.setSummary(this.getString(R.string.settings_summary).replace("$1", "" + radius));
         }
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             // Set seekbar summary :
-
-            /*int radius = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getInt("SEEKBAR_VALUE", 50);
+            /*String startTime = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("preferences_start_time", "");
+            _startTimePref.setSummary(this.getString(R.string.pref_start_inkognito_time).replace("$1", "" + startTime));
+            int radius = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getInt("SEEKBAR_VALUE", 50);
             _seekBarPref.setSummary(this.getString(R.string.settings_summary).replace("$1", "" + radius));*/
 
         }

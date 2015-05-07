@@ -19,9 +19,9 @@
     <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_profile">Profile</string>
     <string name="pref_start_inkognito">Початок недоступності</string>
-    <string name="pref_start_inkognito_time">Час початку</string>
+    <string name="pref_start_inkognito_time">Час початку $1</string>
     <string name="pref_end_inkognito">Кінець недоступності</string>
-    <string name="pref_end_inkognito_time">Час закінчення</string>
+    <string name="pref_end_inkognito_time">Час закінчення $1</string>
 
     <string name="settings_summary">Поточне значення: $1 км</string>
     <string name="settings_unit">км</string>

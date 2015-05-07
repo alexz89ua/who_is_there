@@ -165,7 +165,7 @@ public class MapActivity extends ActionBarActivity
 
     private void InitPrimeUser() {
         myMap.setMyLocationEnabled(true);
-        /*myMap.clear(); поки що немає необхідності*/
+        myMap.clear();
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location myLoc = MyLocationListener.imHere;
         if (myLoc != null) {
@@ -290,6 +290,11 @@ public class MapActivity extends ActionBarActivity
     @Override
     public void onLocationChanged(Location loc) {
         /*InitPrimeUser();*/
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Локацію змінено!",
+                Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override

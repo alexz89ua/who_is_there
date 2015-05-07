@@ -1,5 +1,6 @@
 package com.stfalcon.whoisthere;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ public class TimePreference extends DialogPreference {
     protected boolean is24HourFormat;
     protected TimePicker picker=null;
     protected TextView timeDisplay;
+    protected Context mContext;
 
     public TimePreference(Context ctxt) {
         this(ctxt, null);
@@ -28,7 +30,7 @@ public class TimePreference extends DialogPreference {
 
     public TimePreference(Context ctxt, AttributeSet attrs, int defStyle) {
         super(ctxt, attrs, defStyle);
-
+        mContext = ctxt;
         is24HourFormat = DateFormat.is24HourFormat(ctxt);
         setPositiveButtonText("ОК");
         setNegativeButtonText("Отмена");
@@ -93,6 +95,7 @@ public class TimePreference extends DialogPreference {
             if (callChangeListener(time)) {
                 persistString(time);
                 timeDisplay.setText(toString());
+                ((Activity)mContext).recreate();
             }
         }
     }
