@@ -7,5 +7,5 @@ import java.util.ArrayList;
  */
 public class Wrapper {
     public int code;
-    public ArrayList<People> obj;
+    public Object obj;
 }

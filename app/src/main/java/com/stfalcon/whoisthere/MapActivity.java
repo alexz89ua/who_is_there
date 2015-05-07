@@ -60,10 +60,8 @@ public class MapActivity extends BaseSpiceActivity
     ActionBarDrawerToggle mDrawerToggle;
     SupportMapFragment mapFragment;
     GoogleMap myMap;
-    GetPeopleDataRequest RequestGetUser = new GetPeopleDataRequest("https://who-is-there.herokuapp.com/");
-    ;
+    GetPeopleDataRequest RequestGetUser;
     SendUserDaraRequest sendUserDaraRequest;
-    List<String> name_arr;
     int zoom = 4000;
     TextRequestListener textRequestListener = new TextRequestListener();
     private Toolbar toolbar;
@@ -130,11 +128,23 @@ public class MapActivity extends BaseSpiceActivity
         InitMap();
         InitPrimeUser();
 
+        RequestGetUser = new GetPeopleDataRequest("https://who-is-there.herokuapp.com/");
+
+        String url = "https://who-is-there.herokuapp.com/hello/" + FacebookActivity.user.id + "/" +
+                FacebookActivity.user.name + "/" + FacebookActivity.user.x + "/" + FacebookActivity.user.y;
+        try {
+            URL u = new URL(url);
+            sendUserDaraRequest = new SendUserDaraRequest(u);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     protected void onStart() {
         super.onStart();
         getSpiceManager().execute(RequestGetUser, textRequestListener);
+        getSpiceManager().execute(sendUserDaraRequest, textRequestListener);
     }
 
     private void InitMap() {
@@ -259,19 +269,6 @@ public class MapActivity extends BaseSpiceActivity
     @Override
     public void onLocationChanged(Location loc) {
         /*InitPrimeUser();*/
-        FacebookActivity.user.x = loc.getLatitude();
-        FacebookActivity.user.y = loc.getLongitude();
-        String url = "https://who-is-there.herokuapp.com/hello/" + FacebookActivity.user.id + "/" +
-                FacebookActivity.user.name + "/" + FacebookActivity.user.x + "/" + FacebookActivity.user.y;
-        try {
-            URL u = new URL(url);
-            sendUserDaraRequest = new SendUserDaraRequest(u);
-            getSpiceManager().execute(sendUserDaraRequest, textRequestListener);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        getSpiceManager().execute(RequestGetUser, textRequestListener);
-
     }
 
     @Override
@@ -341,7 +338,7 @@ public class MapActivity extends BaseSpiceActivity
         public void onRequestSuccess(final Wrapper result) {
             switch (result.code) {
                 case Code.GET_USER_DATA_OK:
-                    ArrayList<People> arr_p = result.obj;
+                    ArrayList<People> arr_p = (ArrayList<People>) result.obj;
                     People p = arr_p.get(1);
                     Toast toast = Toast.makeText(getApplicationContext(), p.name, Toast.LENGTH_SHORT);
                     toast.show();
@@ -350,10 +347,6 @@ public class MapActivity extends BaseSpiceActivity
                     Toast.makeText(MapActivity.this, "yeah", Toast.LENGTH_SHORT).show();
                     break;
             }
-
-
-           /* Toast toast = Toast.makeText(getApplicationContext(), name_arr.get(1), Toast.LENGTH_SHORT);
-            toast.show();*/
         }
     }
 
