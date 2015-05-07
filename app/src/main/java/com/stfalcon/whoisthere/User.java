@@ -18,6 +18,8 @@ public class User {
     public String gender;
     @SerializedName("birthday")
     public String birthday;
+    public double x;
+    public double y;
     public User(String name, String id, String link, String email, String gender, String birthday)
     {
         this.id=id;

@@ -65,11 +65,8 @@ public class FacebookActivity extends BaseSpiceActivity {
 
         CheckUserLogin();
 
-      //  textRequestListener = new TextRequestListener();
-
         LoginButtonCLick();
 
-      //  sendUserDaraRequest = new SendUserDaraRequest(u);
        /* List<String> permissionNeeds = Arrays.asList("user_photos", "email", "user_birthday", "user_location", "public_profile");
 
         loginButton.setReadPermissions(permissionNeeds);*/
@@ -86,7 +83,7 @@ public class FacebookActivity extends BaseSpiceActivity {
         //getSpiceManager().execute(sendUserDaraRequest, textRequestListener);
     }
 
-    public final class TextRequestListener implements RequestListener<String> {
+    public final class TextRequestListener implements RequestListener<Wrapper> {
 
         @Override
         public void onRequestFailure(SpiceException spiceException) {
@@ -94,10 +91,17 @@ public class FacebookActivity extends BaseSpiceActivity {
         }
 
         @Override
-        public void onRequestSuccess(final String result) {
+        public void onRequestSuccess(final Wrapper result) {
 
-            Toast.makeText(FacebookActivity.this, "success", Toast.LENGTH_SHORT).show();
-
+switch (result.code)
+{
+    case Code.SEND_USER_DATA_OK:
+        Toast.makeText(FacebookActivity.this, "success", Toast.LENGTH_SHORT).show();
+        break;
+    case Code.SEND_USER_DATA_FALSE:
+        Toast.makeText(FacebookActivity.this, "nope", Toast.LENGTH_SHORT).show();
+        break;
+}
 
         }
     }
@@ -138,8 +142,9 @@ public class FacebookActivity extends BaseSpiceActivity {
             mSettings = this.getSharedPreferences("ka", Context.MODE_PRIVATE);
             String s = mSettings.getString("parser", "nooooo");*/
 
-
-            url = "https://who-is-there.herokuapp.com/hello/" + user.id + "/" + user.name + "/228/48";
+            user.x=228;
+            user.y=48;
+            url = "https://who-is-there.herokuapp.com/hello/" + user.id + "/" + user.name + "/"+user.x+"/"+user.y;
             Log.v("URL", url);
             try {
                 u = new URL(url);

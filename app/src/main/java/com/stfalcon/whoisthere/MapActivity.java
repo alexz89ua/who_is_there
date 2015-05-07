@@ -2,43 +2,24 @@ package com.stfalcon.whoisthere;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.drawable.BitmapDrawable;
-
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.AbsoluteLayout;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
@@ -49,60 +30,46 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.octo.android.robospice.SpiceManager;
-import com.octo.android.robospice.persistence.DurationInMillis;
 import com.octo.android.robospice.persistence.exception.SpiceException;
 import com.octo.android.robospice.request.listener.RequestListener;
-import com.octo.android.robospice.request.simple.SimpleTextRequest;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 
-public class MapActivity extends ActionBarActivity
+public class MapActivity extends BaseSpiceActivity
         implements LocationListener, GoogleMap.OnMarkerClickListener {
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
 
-    String TITLES[] = {"Profile","Settings","Exit"};
-    int ICONS[] = {R.drawable.profile,R.drawable.settings,R.drawable.exit};
+    String TITLES[] = {"Profile", "Settings", "Exit"};
+    int ICONS[] = {R.drawable.profile, R.drawable.settings, R.drawable.exit};
 
 
     String NAME;
     String ID;
     String PASS;
 
-    String parserLink;
-
-    private Toolbar toolbar;
-
     RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
     DrawerLayout Drawer;
-
-    private SharedPreferences mSettings;
-
-
     ActionBarDrawerToggle mDrawerToggle;
-
-
-    private CharSequence mTitle;
-
-    private LocationManager locationManager;
-
     SupportMapFragment mapFragment;
+    GoogleMap myMap;
+    GetPeopleDataRequest RequestGetUser = new GetPeopleDataRequest("https://who-is-there.herokuapp.com/");
+    ;
+    SendUserDaraRequest sendUserDaraRequest;
+    List<String> name_arr;
+    int zoom = 4000;
+    TextRequestListener textRequestListener = new TextRequestListener();
+    private Toolbar toolbar;
+    private LocationManager locationManager;
     private Marker myMarker;
     private PopupWindow pwindo;
-    GoogleMap myMap;
-    SimpleTextRequest txtRequest;
-    ArrayList<String> name;
-
-    int zoom = 4000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,18 +87,13 @@ public class MapActivity extends ActionBarActivity
         ID = FacebookActivity.user.id;
         PASS = "http://graph.facebook.com/" + ID + "/picture?type=large";
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
+        mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView);
 
-        mRecyclerView.setHasFixedSize(true);                            // Letting the system know that the list objects are of fixed size
-
-    // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+        mRecyclerView.setHasFixedSize(true);
 
         ImageView im = (ImageView) findViewById(R.id.imageView);
 
-        mAdapter = new MyAdapter(TITLES,ICONS,NAME,ID,PASS,im,this);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
-
-        // And passing the titles,icons,header view name, header view email,
-        // and header view profile picture
+        mAdapter = new MyAdapter(TITLES, ICONS, NAME, ID, PASS, im, this);
 
         mRecyclerView.setAdapter(mAdapter);                              // Setting the adapter to RecyclerView
 
@@ -142,7 +104,7 @@ public class MapActivity extends ActionBarActivity
 
         Drawer = (DrawerLayout) findViewById(R.id.DrawerLayout);        // Drawer object Assigned to the view
 
-        mDrawerToggle = new ActionBarDrawerToggle(this,Drawer,toolbar,R.string.drawer_open,R.string.drawer_close){
+        mDrawerToggle = new ActionBarDrawerToggle(this, Drawer, toolbar, R.string.drawer_open, R.string.drawer_close) {
 
 
             @Override
@@ -168,56 +130,11 @@ public class MapActivity extends ActionBarActivity
         InitMap();
         InitPrimeUser();
 
-        txtRequest = new SimpleTextRequest("https://who-is-there.herokuapp.com/");
-
-        BaseSpiceActivity b = new BaseSpiceActivity() {
-            @Override
-            protected void onStart() {
-                super.onStart();
-                getSpiceManager().execute(txtRequest, "txt", DurationInMillis.ONE_MINUTE,
-                        new TextRequestListener());
-
-            }
-        };
-
     }
 
-    public final class TextRequestListener implements RequestListener<String> {
-
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            Toast.makeText(MapActivity.this, "failure", Toast.LENGTH_SHORT).show();
-        }
-
-        @Override
-        public void onRequestSuccess(final String result) {
-
-            Toast.makeText(MapActivity.this, "success", Toast.LENGTH_SHORT).show();
-
-            Work_With_Json_Array(result);
-
-            Toast toast = Toast.makeText(getApplicationContext(),"skaaa", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
-
-
-    public void Work_With_Json_Array(String json_array) {
-        try {
-      name = new ArrayList<String>();
-
-            JSONObject json_obj = new JSONObject(json_array);
-
-name.add(json_obj.getString("name"));
-           /* name.setText("Name - " + json_obj.getString("name"));
-
-            id.setText("Id - " + json_obj.getString("id"));
-
-            gender.setText("You - " + json_obj.getString("gender"));*/
-
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+    protected void onStart() {
+        super.onStart();
+        getSpiceManager().execute(RequestGetUser, textRequestListener);
     }
 
     private void InitMap() {
@@ -229,7 +146,6 @@ name.add(json_obj.getString("name"));
             finish();
         }
     }
-
 
     private void InitPrimeUser() {
         myMap.setMyLocationEnabled(true);
@@ -268,41 +184,7 @@ name.add(json_obj.getString("name"));
         pwindo = new PopupWindow(layout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         pwindo.setBackgroundDrawable(new ColorDrawable());
         pwindo.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
-        /*Button ProfileBtn = (Button) layout.findViewById(R.id.ProfileBtn);
-        Button ChatBtn = (Button) layout.findViewById(R.id.ChatBtn);
-        Button AddBtn = (Button) layout.findViewById(R.id.AddBtn);
-
-        ProfileBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "ProfileBtn_Pressed",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-        });
-        ChatBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "ChatBtn_Pressed",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-        });
-        AddBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "AddBtn_Pressed",
-                        Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-        });*/
-
     }
-
 
     public void ProfileBtnClick(View layout) {
         Toast toast = Toast.makeText(getApplicationContext(),
@@ -337,7 +219,6 @@ name.add(json_obj.getString("name"));
         }
         return true;
     }
-
 
     public void onSectionAttached(int number) {
         /*switch (number) {
@@ -378,6 +259,19 @@ name.add(json_obj.getString("name"));
     @Override
     public void onLocationChanged(Location loc) {
         /*InitPrimeUser();*/
+        FacebookActivity.user.x = loc.getLatitude();
+        FacebookActivity.user.y = loc.getLongitude();
+        String url = "https://who-is-there.herokuapp.com/hello/" + FacebookActivity.user.id + "/" +
+                FacebookActivity.user.name + "/" + FacebookActivity.user.x + "/" + FacebookActivity.user.y;
+        try {
+            URL u = new URL(url);
+            sendUserDaraRequest = new SendUserDaraRequest(u);
+            getSpiceManager().execute(sendUserDaraRequest, textRequestListener);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        getSpiceManager().execute(RequestGetUser, textRequestListener);
+
     }
 
     @Override
@@ -395,12 +289,19 @@ name.add(json_obj.getString("name"));
 
     }
 
+    public void CloseApp() {
+        this.finish();
+    }
+
     public static class PlaceholderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
+        }
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -412,9 +313,6 @@ name.add(json_obj.getString("name"));
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
-        }
-
-        public PlaceholderFragment() {
         }
 
         @Override
@@ -432,9 +330,31 @@ name.add(json_obj.getString("name"));
         }
     }
 
-    public void CloseApp()
-    {
-        this.finish();
+    public final class TextRequestListener implements RequestListener<Wrapper> {
+
+        @Override
+        public void onRequestFailure(SpiceException spiceException) {
+            Toast.makeText(MapActivity.this, "failure", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onRequestSuccess(final Wrapper result) {
+            switch (result.code) {
+                case Code.GET_USER_DATA_OK:
+                    ArrayList<People> arr_p = result.obj;
+                    People p = arr_p.get(1);
+                    Toast toast = Toast.makeText(getApplicationContext(), p.name, Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+                case Code.SEND_USER_DATA_OK:
+                    Toast.makeText(MapActivity.this, "yeah", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
+
+           /* Toast toast = Toast.makeText(getApplicationContext(), name_arr.get(1), Toast.LENGTH_SHORT);
+            toast.show();*/
+        }
     }
 
 }

@@ -13,25 +13,25 @@ import java.net.URL;
 /**
  * Created by root on 30.04.15.
  */
-public class SendUserDaraRequest extends SpiceRequest<String> {
+public class SendUserDaraRequest extends SpiceRequest<Wrapper> {
 
     URL url;
 
     public SendUserDaraRequest(URL url) {
-        super(String.class);
+        super(Wrapper.class);
         this.url = url;
     }
 
     @Override
-    public String loadDataFromNetwork() throws Exception {
-
+    public Wrapper loadDataFromNetwork() throws Exception {
+        Wrapper wrapper = new Wrapper();
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
             if (urlConnection.getResponseCode() == urlConnection.HTTP_OK) {
-                return "success";
+                wrapper.code=Code.SEND_USER_DATA_OK;
             } else {
-                return String.valueOf(urlConnection.getResponseCode()) + " " + urlConnection.getResponseMessage();
+                wrapper.code=Code.SEND_USER_DATA_FALSE;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class SendUserDaraRequest extends SpiceRequest<String> {
         }
 
 
-        return null;
+        return wrapper;
     }
 
     private String readInputsream(InputStream in) throws IOException {

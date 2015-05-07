@@ -4,11 +4,12 @@ package com.stfalcon.whoisthere;
  * Created by root on 29.04.15.
  */
 import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
 
 import com.octo.android.robospice.SpiceManager;
 
 
-public abstract class BaseSpiceActivity extends Activity {
+public abstract class BaseSpiceActivity extends ActionBarActivity {
     private SpiceManager spiceManager = new SpiceManager(SampleSpiceService.class);
 
     @Override
