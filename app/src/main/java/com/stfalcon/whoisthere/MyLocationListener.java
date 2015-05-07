@@ -15,7 +15,7 @@ class MyLocationListener implements LocationListener {
                 context.getSystemService(Context.LOCATION_SERVICE);
 
         LocationListener locationListener = new MyLocationListener();
-        if (provider=="qwe")
+        /*if (provider=="qwe")*/
         locationManager.requestLocationUpdates(
                 LocationManager.NETWORK_PROVIDER,
                 3000,

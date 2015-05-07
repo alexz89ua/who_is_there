@@ -222,8 +222,8 @@ public class SettingsActivity extends PreferenceActivity {
             // Set listener :
 
             getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-            MyLocationListener myLocList = new MyLocationListener();
-            myLocList.provider = "qwe";
+            /*MyLocationListener myLocList = new MyLocationListener();
+            myLocList.provider = "qwe";*/
             // Set seekbar summary :
             int radius = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getInt("SEEKBAR_VALUE", 50);
             String startTime = PreferenceManager.getDefaultSharedPreferences(this.getActivity()).getString("preferences_start_time", "");
