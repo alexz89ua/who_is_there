@@ -1,0 +1,31 @@
+<resources>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">Загальні</string>
+
+    <string name="pref_title_spy">Шпигунство</string>
+    <string name="pref_description_spy">Дозволити друзям
+        відслідковувати ваше місцезнаходження
+    </string>
+
+    <string name="pref_title_network_change">Тип мережі</string>
+    <string-array name="pref_network_change_titles">
+        <item>GPS</item>
+        <item>Network</item>
+        <item>Offlane</item>
+    </string-array>
+    <string-array name="pref_network_change_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Приватність</string>
+    <string name="pref_title_ringtone">Мій маркер</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+</resources>

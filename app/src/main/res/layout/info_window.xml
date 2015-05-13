@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/background_light"
+    android:id="@+id/popup"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="257dp"
+        android:layout_height="165dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/UserAvatar"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@mipmap/ic_launcher" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:id="@+id/ProfileBtn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="5dp"
+            android:onClick="ProfileBtnClick" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:id="@+id/AddBtn"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="5dp"
+            android:onClick="AddBtnClick" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:id="@+id/UserNameTV"
+            android:layout_alignTop="@+id/UserAvatar"
+            android:layout_alignLeft="@+id/DescriptionTV"
+            android:layout_alignStart="@+id/DescriptionTV"
+            android:layout_marginTop="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:id="@+id/DescriptionTV"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="25dp" />
+
+        <Button
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Chat"
+            android:id="@+id/ChatBtn"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/AddBtn"
+            android:layout_toRightOf="@+id/ProfileBtn"
+            android:layout_toEndOf="@+id/ProfileBtn"
+            android:layout_alignTop="@+id/ProfileBtn"
+            android:onClick="ChatBtnClick" />
+    </RelativeLayout>
+</LinearLayout>
